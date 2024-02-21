@@ -6,68 +6,89 @@
   <script type="text/javascript" src="../common/jquery-3.5.1/jquery-3.5.1.js"></script>
 </head>
 
-<body class="no-skin">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>重重之重的个人主页</title>
+  <script type="text/javascript" src="../common/jquery-3.5.1/jquery-3.5.1.js"></script>
+</head>
+<body style="width: 98%; height: 95%;border: 0;overflow-x:hidden;overflow-y:hidden;">
+<div class="nui-panel" id="search-panel" title="查询机构" style="width: 100%; height:10%;margin-bottom: 10px;"
+     showToolbar="false" showFooter="true" showHeader="false">
+  <form id="form1" class="nui-form" style="height: 100%"  method="post">
+    <table id="table" class="table" align="center" style="height: 80%">
+      <tr>
+        <td colspan="3"> 	<input class="nui-textbox" id="userName" name="userName" emptyText="名称"/></td>
+        <td colspan="1">	<input class="nui-hidden" id="hallId" name="hallId" emptyText="hallId"/> </td>
+        <td colspan="1"><a class="nui-button nui-button-primary" onclick="search()"resourceid="role_query"> 查询 </a></td>
 
-<div class="main-container ace-save-state" id="main-container">
-  <script type="text/javascript">
-    try{ace.settings.loadState('main-container')}catch(e){}
-  </script>
+        <td colspan="1"><a class="nui-button nui-button-error" onclick="reset()"> 重置 </a></td>
 
+        <td colspan="1"><a class="nui-button nui-button-primary" onclick="adduser()" resourceid="role_export"> 添加 </a></td>
+        <td colspan="1"><a class="nui-button nui-button-error" onclick="removeList()" resourceid="role_del"> 删除 </a></td>
+      </tr>
+    </table>
+  </form>
+</div>
 
-  <div class="main-content">
-    <div class="main-content-inner">
-
-
-      <div class="page-content">
-
-        <div class="row">
-          <div class="col-xs-12">
-            <!-- PAGE CONTENT BEGINS -->
-
-            <div class="error-container">
-              <div class="well">
-                <h1 class="grey lighter smaller">
-											<span class="blue bigger-125">
-												<i class="ace-icon fa fa-random"></i>
-												500
-											</span>
-                  出现了一些问题！！
-                </h1>
-
-                <hr />
-                <h3 class="lighter smaller">
-                  但是我们正在
-                  <i class="ace-icon fa fa-wrench icon-animated-wrench bigger-125"></i>
-                  解决它!
-                </h3>
-
-                <div class="space"></div>
-
-                <div>
-                  <h4 class="lighter smaller">与此同时，你可以尝试接下的的操作:</h4>
-
-                  <ul class="list-unstyled spaced inline bigger-110 margin-15">
-
-
-                    <li>
-                      <i class="ace-icon fa fa-hand-o-right blue"></i>
-                      为我们提供更多能够使错误出现的信息！
-                    </li>
-                  </ul>
-                </div>
-
-                <hr />
-                <div class="space"></div>
-
-              </div>
-            </div>
-
-
+<!--footer-->
+<div url="" class="nui-fit" >
+  <div class="mini-splitter" id="splitter" style="width:100%;height:97%;"><!--splitter-->
+    <div size="50%" showCollapseButton="true" style="padding:5px;"><!--splitter-panel1 -->
+      <div class="nui-fit">
+        <div id="datagridExamDep" url="/ntzswd/api/examUser/queryExamUserByUser" dataField="data" totalField="pageInfo.total"
+             class="nui-datagrid" style="width: 100%; height: 100%;"
+             pageSize="10" showPageInfo="true" multiSelect="true"
+             allowSortColumn="false">
+          <div property="columns">
+            <div type="checkcolumn"></div>
+            <div type="indexcolumn" headerAlign="center">序号</div>
+            <div field="userId" name="userId" headerAlign="center" align="center" allowSort="true" >参与人id</div>
+            <div field="userName" name="userName" headerAlign="center" align="center" allowSort="true" >参与人名称</div>
+            <div field="operating" name="operating" renderer="renderOperating" headerAlign="center" allowSort="true" >操作</div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </div><!--splitter-panel1 end -->
+    <div> <!--splitter-panel2 -->
+    </div><!--splitter-panel2 end -->
+  </div> <!-- mini-splitter end -->
+</div>
+
+
+<script type="text/javascript">
+  nui.parse();
+
+  nui.get("splitter").hidePane(2);
+
+  var grid = nui.get("datagridExamDep");
+
+  //查询
+  function search() {
+    formData = new nui.Form("#form1").getData(false, false);
+    grid.load(formData);
+  }
+
+  function renderOperating(e) {
+    console.log(e);
+    var html =
+            '<div style="display: flex;flex-direction: column;align-items: center;justify-content: center;padding: 5px 0;">' ;
+
+    html = html + '<div style="background: #ed3f14;color: #fff;font-size: 10px;text-align: center;padding: 2px 5px;border-radius: 4px;cursor: pointer;" id="' +
+            e.row.id + '" onclick="remove(this.id)">删除</div>'
+
+
+    html = html + '</div>';
+    return html;
+  }
+
+</script>
+</body>
+</html>
+
+
+
 
 
 
